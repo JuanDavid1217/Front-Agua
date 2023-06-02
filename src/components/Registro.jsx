@@ -6,8 +6,8 @@ import '../App.css';
 import { useNavigate } from "react-router-dom";
 
 
-const apiurl = "http://127.0.0.1:8000/"
-//const apiurl ="https://fastapi-juandavid1217.cloud.okteto.net/"
+//const apiurl = "http://127.0.0.1:8000/"
+const apiurl ="https://fastapi-juandavid1217.cloud.okteto.net/"
 function Registrarse(e, usuario, upassword){
     e.preventDefault();
     axios(

@@ -8,7 +8,8 @@ import Almacenamiento from "./Almacenamiento";
 import { useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 
-const apiurl = "http://127.0.0.1:8000/"
+//const apiurl = "http://127.0.0.1:8000/"
+const apiurl ="https://fastapi-juandavid1217.cloud.okteto.net/"
 
 function Casa () {
     const location = useLocation();
