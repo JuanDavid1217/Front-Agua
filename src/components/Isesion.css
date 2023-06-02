@@ -1,0 +1,87 @@
+main{
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10rem;
+    gap: 5rem;
+}
+
+/* -- */
+
+.bienvenido-item{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: 300;
+    gap: 1rem;
+}
+.img-bienvenida{
+    width: 80%;
+    height: 150px;
+    border-radius: 10px;
+    background-image: url(https://images.unsplash.com/photo-1449709992276-24bbca940809?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80https://images.unsplash.com/photo-1449709992276-24bbca940809?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80);
+    background-size: cover;
+}
+.bienvenido-item p{
+    width: 90%;
+}
+button{
+    margin-right: .5rem;
+}
+
+/* -- */
+
+.registrarse-item{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    display: " ";
+
+}
+.registrarse-item h2,
+.isesion-item h2{
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+.registrarse-item form,
+.isesion-item form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 2rem 0;
+}
+.registrarse-item form label,
+.isesion-item form label{
+    padding-bottom: 1rem;
+    color: #71afbd;
+}
+.registrarse-item form input,
+.isesion-item form input{
+    margin-bottom: 1rem;
+    width: 100%;
+    padding: 10px;
+    
+    border: 1px solid #6BA7B5;
+    background-color: #000808;
+    border-radius: 10px;
+    outline: none;
+    color: white;
+    font-size: 1.2rem;
+}
+
+
+/* -- */
+
+.isesion-item{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
