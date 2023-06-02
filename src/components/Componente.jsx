@@ -2,7 +2,8 @@ import React from "react";
 import './Componente.css';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const apiurl = "http://127.0.0.1:8000/"
+//const apiurl = "http://127.0.0.1:8000/"
+const apiurl ="https://fastapi-juandavid1217.cloud.okteto.net/"
 
 function Componente (props) {
     const navigate=useNavigate();
