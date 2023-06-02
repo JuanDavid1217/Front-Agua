@@ -1,0 +1,80 @@
+.contenidoAdministrador {
+    padding: 0 10rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 5rem;
+}
+
+.gpoAdministrador {
+    grid-column: 1/4;
+}
+
+.gpoAdministrador h1 {
+    padding-bottom: 2rem;
+}
+
+.gpoAdministrador .noRegistros {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.gpoGrupos {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+
+.nuevaSucursal {
+    border-radius: 10px;
+    background-color: #000808;
+    width: 120px;
+    height: 120px;
+    border-color: #456C75;
+    border-style: dotted;
+    color: #456C75;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.nuevaSucursal:hover {
+    background-color: #001616;
+}
+
+.altaGrupo {
+    grid-column: 4/5;
+}
+
+.altaGrupo h2 {
+    padding-bottom: 2rem;
+}
+
+.altaGrupo form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.altaGrupo form label {
+    padding-bottom: 1rem;
+    color: #71afbd;
+}
+
+.altaGrupo form input {
+    margin-bottom: 1rem;
+    width: 100%;
+    padding: 10px;
+
+    border: 1px solid #6BA7B5;
+    background-color: #000808;
+    border-radius: 10px;
+    outline: none;
+    color: white;
+    font-size: 1.2rem;
+}

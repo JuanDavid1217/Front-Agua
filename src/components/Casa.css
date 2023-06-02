@@ -1,0 +1,82 @@
+.contenidoCasa {
+    padding: 0 10rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 5rem;
+    margin-bottom: 10rem;
+}
+
+.gpoCasa {
+    grid-column: 1/4;
+}
+
+.gpoCasa h1 {
+    padding-bottom: 2rem;
+}
+
+.gpoCasa .noRegistros {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+
+.gpoTinacos {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+
+.nuevoTinaco {
+    border-radius: 10px;
+    background-color: #000808;
+    width: 120px;
+    height: 120px;
+    border-color: #456C75;
+    border-style: dotted;
+    color: #456C75;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.nuevoTinaco:hover {
+    background-color: #001616;
+}
+
+.altaAlmacenamiento {
+    grid-column: 4/5;
+}
+
+.altaAlmacenamiento h2 {
+    padding-bottom: 2rem;
+}
+
+.altaAlmacenamiento form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.altaAlmacenamiento form label {
+    padding-bottom: 1rem;
+    color: #71afbd;
+}
+
+.altaAlmacenamiento form input {
+    margin-bottom: 1rem;
+    width: 100%;
+    padding: 10px;
+
+    border: 1px solid #6BA7B5;
+    background-color: #000808;
+    border-radius: 10px;
+    outline: none;
+    color: white;
+    font-size: 1.2rem;
+}

@@ -1,0 +1,15 @@
+.mainComponente{
+    width: 120px;
+    height: 120px;
+    background-color: #456C75;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: .8rem;
+    border-radius: 10px;
+}
+.mainComponente:hover{
+    cursor: pointer;
+    background-color: #385a61;
+}
