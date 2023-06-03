@@ -6,7 +6,7 @@ import { useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 //const apiurl = "http://127.0.0.1:8000/"
-const apiurl ="https://fastapi-juandavid1217.cloud.okteto.net/"
+const apiurl = "https://fastapi-juandavid1217.cloud.okteto.net/"//"https://fastapi-juandavid1217.cloud.okteto.net/"
 
 function Administrador() {
     const location = useLocation();
@@ -30,7 +30,7 @@ function Administrador() {
         axios(
             {
                 method: 'POST',
-                url: apiurl+"Administrador-Casa/Grupo",
+                url: apiurl+"Administrador-Casa/Grupo/",
                 data:{
                     nombre: nombreg,
                     id_usuario:user

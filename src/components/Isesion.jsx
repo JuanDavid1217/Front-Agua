@@ -8,7 +8,7 @@ import Casa from '../components/Casa.jsx';
 import '../App.css';
 
 //const apiurl = "http://127.0.0.1:8000/"
-const apiurl ="https://fastapi-juandavid1217.cloud.okteto.net/"
+const apiurl ="https://fastapi-juandavid1217.cloud.okteto.net/"//https://fastapi-juandavid1217.cloud.okteto.net/"
 
 function IsesioN(){
     const navigate = useNavigate();

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 
 //const apiurl = "http://127.0.0.1:8000/"
-const apiurl ="https://fastapi-juandavid1217.cloud.okteto.net/"
+const apiurl ="https://fastapi-juandavid1217.cloud.okteto.net/"//https://fastapi-juandavid1217.cloud.okteto.net/"
 function Registrarse(e, usuario, upassword){
     e.preventDefault();
     axios(
@@ -50,7 +50,7 @@ function Registro(){
         axios(
         {
             method: 'POST',
-            url: apiurl+"General-Users",
+            url: apiurl+"General-Users/",
             data:{
                 usuario:user,
                 password:upassword,
@@ -66,7 +66,7 @@ function Registro(){
                     }else{
                         axios({
                             method:'POST',
-                            url: apiurl+"Administrador-Casa/Grupo",
+                            url: apiurl+"Administrador-Casa/Grupo/",
                             data:{
                                 nombre:"Mi Hogar",
                                 id_usuario:info['id_usuario']
