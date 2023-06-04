@@ -46,6 +46,7 @@ function Sucursal(props) {
             console.log("Respuesta de guardado (Almacenamiento): "+res.status)
             getAlmas(e, id_grupo, grupos)
         }).catch(errors=>{
+            window.alert(errors.response.data['detail'])
         })
     }
 
@@ -59,9 +60,10 @@ function Sucursal(props) {
         ).then(res=>{
             if(res.status==200){
                 grupos['almacenamientos']=res.data;
-                navegar('/Admin/Grupos', {state:grupos})
+                navegar('/Admin/Grupos', {state:grupos, replace:true})
             }
         }).catch(errors=>{
+            window.alert(errors.response.data['detail'])
         })
     }
 
