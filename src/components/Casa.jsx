@@ -48,6 +48,7 @@ function Casa () {
             console.log("Respuesta de guardado (Almacenamiento): "+res.status)
             getAlmas(e, id_grupo, grupos)
         }).catch(errors=>{
+            window.alert(errors.response.data['detail'])
         })
     }
 
@@ -61,9 +62,10 @@ function Casa () {
         ).then(res=>{
             if(res.status==200){
                 grupos['grupos'][0]['almacenamientos']=res.data;
-                navegar('/Casa', {state:grupos})
+                navegar('/Casa', {state:grupos, replace:true})
             }
         }).catch(errors=>{
+            window.alert(errors.response.data['detail'])
         })
     }
 //{casa['nombre']==null?(casa['grupos'][0]['nombre']):(casa['nombre'])}

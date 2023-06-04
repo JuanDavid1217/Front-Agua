@@ -31,6 +31,7 @@ function Componente (props) {
                 navigate('/Admin/Grupos', {state:res.data})
             }
         }).catch(errors=>{
+            window.alert(errors.response.data['detail'])
         })
     }
 
@@ -46,6 +47,7 @@ function Componente (props) {
                 navigate('/almacenamientos', {state:res.data})
             }
         }).catch(errors=>{
+            window.alert(errors.response.data['detail'])
         })
     }
 
