@@ -40,6 +40,7 @@ function Administrador() {
             console.log("Respuesta de guardado (Grupo): "+res.status)
             getGroups(e, user, admin)
         }).catch(errors=>{
+            window.alert(errors.response.data['detail'])
         })
     }
 
@@ -53,8 +54,9 @@ function Administrador() {
         ).then(res=>{
             console.log(res.data)
             admin['grupos']=res.data;
-            navegar('/Admin', {state:admin});
+            navegar('/Admin', {state:admin, replace:true});
         }).catch(errors=>{
+            window.alert(errors.response.data['detail'])
         })
     }
     //console.log(info)
