@@ -1,13 +1,20 @@
 import React from "react";
 import Portada from "./Portada";
 import './Almacenamiento.css'
+import Menu from '../menu/menubar.js'
+import { useLocation } from "react-router-dom";
 
 function Almacenamiento() {
+    const data=useLocation()
+    const dataAlma=data.state['info']
+    const user=data.state['user']
+    console.log("Estoy en el almacenaiento del user_id: "+user)
     return (
         <div className="mainAlmacenamiento">
             <Portada
                 urlPortada='https://images.unsplash.com/photo-1509041172795-d4869fe4a9eb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1254&q=80'
             />
+            <Menu nivel={3} tipo={user} id={dataAlma['id_almacenamiento']}/>
             <div className="contenidoAlmacenamiento">
                 <h1>Tinaco 1 <span>Almacenamiento</span></h1>
                 <div className="historialConsumo">

@@ -1,7 +1,7 @@
 .navbar {
-    background-color: #333;
+    background-color: #000808;
     color: #fff;
-    display: flex;
+    display: justify;
     justify-content: space-between;
     padding: 10px;
   }
@@ -29,10 +29,45 @@
     justify-content: space-between;
     height: 20px;
     width: 30px;
+    margin-bottom: 5px;
   }
   
   .bar {
     background-color: #fff;
     height: 3px;
     width: 100%;
+  }
+
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    color:#000808;
+    width: 400px;
+    height: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .popup.hidden {
+    /* Estilos para ocultar la ventana emergente */
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .popup p,
+  .popup button {
+    /* Estilos del texto dentro de la ventana emergente */
+    text-align: center;
+    align-items: center;
   }
