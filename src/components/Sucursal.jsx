@@ -73,7 +73,7 @@ function Sucursal(props) {
             <Portada
                 urlPortada="https://images.unsplash.com/photo-1533077162801-86490c593afb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
             />
-            <Menu nivel={tipo==3?(1):(2)} tipo={tipo} id={grupos['id_grupo']}/>
+            <Menu nivel={tipo==3?(1):(2)} tipo={tipo} id={grupos['id_grupo']} objeto={grupos}/>
             <div className="contenidoSucursal">
                 <div className="gpoSucursal">
                     <h1>{grupos['nombre']}</h1>

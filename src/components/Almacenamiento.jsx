@@ -9,14 +9,15 @@ function Almacenamiento() {
     const dataAlma=data.state['info']
     const user=data.state['user']
     console.log("Estoy en el almacenaiento del user_id: "+user)
+    console.log("Estoy en el almacenaiento del grupo: "+dataAlma['id_grupo'])
     return (
         <div className="mainAlmacenamiento">
             <Portada
                 urlPortada='https://images.unsplash.com/photo-1509041172795-d4869fe4a9eb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1254&q=80'
             />
-            <Menu nivel={3} tipo={user} id={dataAlma['id_almacenamiento']}/>
+            <Menu nivel={3} tipo={user} id={dataAlma['id_almacenamiento']} grupo={dataAlma['id_grupo']} objeto={dataAlma}/>
             <div className="contenidoAlmacenamiento">
-                <h1>Tinaco 1 <span>Almacenamiento</span></h1>
+                <h1>Almacenamiento: <span>{dataAlma['ubicacion']}</span></h1>
                 <div className="historialConsumo">
                     <h2>Historial de Consumo</h2>
                     <form action="">
@@ -31,7 +32,7 @@ function Almacenamiento() {
                     <h2>Estado Actual</h2>
                     <div className="estadoActualDatos">
                         <p>Capacidad máxima</p>
-                        <p>100 lts</p>
+                        <p>{dataAlma['capacidad_maxima']} Lts</p>
                         <div>Nivel actual</div>
                         <div>2/3</div>
                     </div>

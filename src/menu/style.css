@@ -71,3 +71,7 @@
     text-align: center;
     align-items: center;
   }
+
+  .popup label, .popup input {
+    display: inline;
+  }
