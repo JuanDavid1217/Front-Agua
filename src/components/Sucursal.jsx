@@ -20,11 +20,11 @@ function Sucursal(props) {
     const[ubicacion, setUbicacion]=useState('');
 
     const ChangeCapacidad=(e)=>{
-        setCapacidad({capacidad:e.target.value})
+        setCapacidad(e.target.value)
     }
 
     const ChangeUbicacion=(e)=>{
-        setUbicacion({ubicacion:e.target.value})
+        setUbicacion(e.target.value)
     }
 
     const createAlma=(e, capacidad, ubicacion, id_grupo, grupos)=>{
@@ -122,7 +122,7 @@ function Sucursal(props) {
                         <input type="text" id="ubicacionAlmacenamiento" onChange={(e)=>{ChangeUbicacion(e)}}/>
                     </form>
                     <div className="botonesAlta">
-                        <button onClick={(e)=>{createAlma(e, capacidad['capacidad'], ubicacion['ubicacion'], grupos['id_grupo'], grupos)}} disabled={grupos['almacenamientos'].length>=5?(true):(false)}>Crear</button>
+                        <button onClick={(e)=>{createAlma(e, capacidad, ubicacion, grupos['id_grupo'], grupos)}} disabled={grupos['almacenamientos'].length>=5?(true):(false)}>Crear</button>
                     </div>
                 </div>):(<></>)}
             </div>
