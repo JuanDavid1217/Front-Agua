@@ -7,14 +7,13 @@ const apiurl ="https://fastapi-juandavid1217.cloud.okteto.net/"//https://fastapi
 
 function Componente (props) {
     const navigate=useNavigate();
-    const {nombre, group_id, navegar}=props;
+    const {nombre, group_id, navegar, user}=props;
 
     const navegacion=(e, navegar)=>{
         if(navegar==1){
             displaygroup(e, group_id)
         }else{
             if(navegar==2){
-
                 displayalmacenamientos(e, group_id)
             }
         }
@@ -44,7 +43,9 @@ function Componente (props) {
             }
         ).then(res=>{
             if(res.status==200){
-                navigate('/almacenamientos', {state:res.data})
+                const info={'info':res.data,
+                      'user':user}
+                navigate('/almacenamientos', {state:info})
             }
         }).catch(errors=>{
             window.alert(errors.response.data['detail'])

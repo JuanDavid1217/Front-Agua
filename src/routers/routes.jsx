@@ -16,8 +16,8 @@ export function MyRoutes(){
             <Route path="/" element={<Isesion/>}/>
             <Route path={"Admin"} element={<Administrador/>}/>
             <Route path={"Casa"} element={<Casa/>}/>
-            <Route path={"Empleado"} element={<Sucursal tipo={1} vista={1}/>}/>
-            <Route path={"Admin/Grupos"} element={<Sucursal tipo={2} vista={2}/>}/>
+            <Route path={"Empleado"} element={<Sucursal tipo={3} vista={1}/>}/>
+            <Route path={"Admin/Grupos"} element={<Sucursal tipo={1} vista={2}/>}/>
             <Route path={"almacenamientos"} element={<Almacenamiento/>}/>
       </Routes>
       </BrowserRouter>
