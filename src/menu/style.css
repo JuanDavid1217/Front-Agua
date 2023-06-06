@@ -75,3 +75,49 @@
   .popup label, .popup input {
     display: inline;
   }
+
+  .popupvin {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    color:#000808;
+    width: 500px;
+    height: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    transition: opacity 0.3s ease-in-out;
+  }
+  .popupvin label, .popupvin input {
+    display: inline;
+    text-align: center;
+    align-content: center;
+  }
+
+  .popupvin.hidden {
+    /* Estilos para ocultar la ventana emergente */
+    opacity: 0;
+    pointer-events: none;
+  }
+  .popup p {
+    /* Estilos del texto dentro de la ventana emergente */
+    text-align: justify;
+  }
+
+  .opciones{
+    font-size: 12px;
+  }
+  #password{
+    margin-right: 10px;
+  }
+  #user{
+    margin-left: 33px;
+  }
