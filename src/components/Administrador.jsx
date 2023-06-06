@@ -19,7 +19,7 @@ function Administrador() {
 
     const ChangeNombre=(e)=>{
         e.preventDefault();
-        setNombre({nombre:e.target.value});
+        setNombre(e.target.value);
     }
 
     const createGroup=(e, user, nombreg, admin)=>{
@@ -110,7 +110,7 @@ function Administrador() {
                         <input type="text" onChange={(e)=>{ChangeNombre(e)}}/>
                     </form>
                     <div className="botonesAlta">
-                        <button onClick={(e)=>{createGroup(e, admin['id_usuario'], nombre['nombre'], admin)}} disabled={admin['grupos'].length>=5?(true):(false)}>Crear</button>
+                        <button onClick={(e)=>{createGroup(e, admin['id_usuario'], nombre, admin)}} disabled={admin['grupos'].length>=5?(true):(false)}>Crear</button>
                     </div>
                 </div>):(<></>)}
             </div>
