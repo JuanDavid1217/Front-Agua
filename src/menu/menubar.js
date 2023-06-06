@@ -11,9 +11,12 @@ function Menu(props) {
     const navegar=useNavigate()
     const[estadoE, setEstadoE] = useState(1)
     const[estadoM, setEstadoM]=useState(1)
+    const[estadoV, setEstadoV]=useState(1)
     const[capacidad, setCapacidad]=useState(0)
     const [ubi, setUbi]=useState("")
     const [nombre, setNombre]=useState("")
+    const [usuario, setUsuario]=useState("")
+    const [password, setPassword]=useState("")
     //const id_user=null
 
     const changeEstado = (e) => {
@@ -39,7 +42,14 @@ function Menu(props) {
         e.preventDefault()
         setNombre({nombre:e.target.value})
     }
-    
+    const changeUsuario=(e)=>{
+        e.preventDefault()
+        setUsuario({usuario:e.target.value})
+    }
+    const changePassword=(e)=>{
+        e.preventDefault()
+        setPassword({password:e.target.value})
+    }
     const cerrarsession=(e)=>{
         navegar('/', {state:null, replace:true})
     }
@@ -233,6 +243,38 @@ function Menu(props) {
             window.alert(errors.response.data['detail'])
         })
     }
+
+
+
+    /*----TODO ESTO ES PARA MODIFICAR----*/
+
+    const vinculacion=(e)=>{
+        e.preventDefault()
+        if(estadoV['estadoV']==1){
+            setEstadoV({estadoV:2})
+        }else{
+            setEstadoV({estadoV:1})
+        }
+    }
+    const vincular=(e, u, p)=>{
+        e.preventDefault()
+        axios(
+            {
+                method:'POST',
+                url: apiurl+"Administrador/",
+                data:{
+                    usuario_vinculacion: u,
+                    id_grupo: id,
+                    clave_vinculacion: p
+                }
+            }
+        ).then(res=>{
+            vinculacion(e)
+            window.alert("usuario vinculado con exito!!")
+        }).catch(errors=>{
+            window.alert(errors.response.data['detail'])
+        })
+    }
     //const {vista}=props
     {/*tipo
      1: Empleado (Vinculacion)
@@ -255,7 +297,7 @@ function Menu(props) {
                 {
                     estado['estado']==2?(
                     <ul class="menu" id="menu" >
-                        {nivel==2&&tipo==1?(<li><a href="#">Vincular</a></li>):(<></>)}
+                        {nivel==2&&tipo==1?(<li><a onClick={(e)=>{vinculacion(e)}}>Vincular</a></li>):(<></>)}
                         {(nivel==2||nivel==3)&&(tipo==2||tipo==1)?(
                             <>
                             <li><a onClick={(e)=>{modificar(e)}}>Modificar</a></li>
@@ -315,6 +357,32 @@ function Menu(props) {
                 </div>
             ):(<></>)}
 
+            {/* Esto es lo que tendra la ventana de vinculacion */}
+            {estadoV['estadoV']==1?(
+                <div class="popupvin">
+                    <h2>VINCULACIÓN</h2>
+                    <br/>
+                    <p>Ingresa un nombre de usuario y  una contraseña para que otra persona tenga acceso a este grupo.</p>
+                    <br/>
+                    <p><h4>Nota:</h4> El usuario vinculado no podra realizar modificaciones o eliminaciones en tu grupo.</p>
+                    <br/>
+                    <div>
+                        <label htmlFor="user">Usuario: </label>
+                        <input type="text" id="user" onChange={(e)=>{changeUsuario(e)}}/>
+                        <br/>
+                        <label htmlFor="password">Contraseña:  </label>
+                        <input type="text" id="password" onChange={(e)=>{changePassword(e)}}/>
+                        <br/>
+                        <br/>
+                        <p class="opciones">La contraseña debe contener contener 1 caracter especial: ! . +</p>
+                    </div>
+                    <br/>
+                    <div>
+                        <button onClick={(e)=>{vincular(e, usuario['usuario'], password['password'])}}>vincular</button>
+                        <button onClick={(e)=>{vinculacion(e)}}>Cancelar</button>
+                    </div>
+                </div>
+            ):(<></>)}
         </>
     )
 }
