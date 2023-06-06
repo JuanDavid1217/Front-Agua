@@ -46,6 +46,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex-direction: column;
     gap: 2rem;
 }
+
+
+.estadoActual button{
+    margin-left: 120px;
+}
 .estadoActualDatos{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -71,6 +76,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
     gap: 2rem;
 }
+
 .estado form{
     display: flex;
     align-items: center;
