@@ -21,34 +21,34 @@ function Menu(props) {
 
     const changeEstado = (e) => {
         e.preventDefault();
-        if (estado['estado'] === 1) {
-            setEstado({ estado: 2 })
-            console.log(estado['estado'])
+        if (estado=== 1) {
+            setEstado(2 )
+            console.log(estado)
         } else {
-            setEstado({ estado: 1 })
-            console.log(estado['estado'])
+            setEstado(1)
+            console.log(estado)
         }
     }
 
     const changeCapacidad=(e)=>{
         e.preventDefault()
-        setCapacidad({capacidad:e.target.value})
+        setCapacidad(e.target.value)
     }
     const changeUbi=(e)=>{
         e.preventDefault()
-        setUbi({ubi:e.target.value})
+        setUbi(e.target.value)
     }
     const changeNombre=(e)=>{
         e.preventDefault()
-        setNombre({nombre:e.target.value})
+        setNombre(e.target.value)
     }
     const changeUsuario=(e)=>{
         e.preventDefault()
-        setUsuario({usuario:e.target.value})
+        setUsuario(e.target.value)
     }
     const changePassword=(e)=>{
         e.preventDefault()
-        setPassword({password:e.target.value})
+        setPassword(e.target.value)
     }
     const cerrarsession=(e)=>{
         navegar('/', {state:null, replace:true})
@@ -105,10 +105,10 @@ function Menu(props) {
 
     const eliminar=(e)=>{
         e.preventDefault()
-        if(estadoE['estadoE']==1){
-            setEstadoE({estadoE:2})
+        if(estadoE==1){
+            setEstadoE(2)
         }else{
-            setEstadoE({estadoE:1})
+            setEstadoE(1)
         }
     }
 
@@ -180,10 +180,10 @@ function Menu(props) {
 
     const modificar=(e)=>{
         e.preventDefault()
-        if(estadoM['estadoM']==1){
-            setEstadoM({estadoM:2})
+        if(estadoM==1){
+            setEstadoM(2)
         }else{
-            setEstadoM({estadoM:1})
+            setEstadoM(1)
         }
     }
 
@@ -250,10 +250,10 @@ function Menu(props) {
 
     const vinculacion=(e)=>{
         e.preventDefault()
-        if(estadoV['estadoV']==1){
-            setEstadoV({estadoV:2})
+        if(estadoV==1){
+            setEstadoV(2)
         }else{
-            setEstadoV({estadoV:1})
+            setEstadoV(1)
         }
     }
     const vincular=(e, u, p)=>{
@@ -295,7 +295,7 @@ function Menu(props) {
                     <div class="bar"></div>
                 </div>
                 {
-                    estado['estado']==2?(
+                    estado==2?(
                     <ul class="menu" id="menu" >
                         {nivel==2&&tipo==1?(<li><a onClick={(e)=>{vinculacion(e)}}>Vincular</a></li>):(<></>)}
                         {(nivel==2||nivel==3)&&(tipo==2||tipo==1)?(
@@ -310,7 +310,7 @@ function Menu(props) {
             </div>
 
             {/* Lo que contendra la ventana de eliminacion*/}
-            {estadoE['estadoE']==1?(
+            {estadoE==2?(
                 <div class="popup">
                     <h2>ELIMINACION</h2>
                     <br/>
@@ -325,7 +325,7 @@ function Menu(props) {
             ):(<></>)}
 
             {/* Lo que contendra la ventana de modificacio*/}
-            {estadoM['estadoM']==1?(
+            {estadoM==2?(
                 <div class="popup">
                     <h2>ACTUALIZACIÓN</h2>
                     <br/>
@@ -351,14 +351,14 @@ function Menu(props) {
                     )}
                     <br/>
                     <div>
-                        <button onClick={(e)=>{nivel==2?(modificarGrupo(e, nombre['nombre'])):(modificarAlma(e, ubi['ubi'], capacidad['capacidad'] ))}}>Confirmar</button>
+                        <button onClick={(e)=>{nivel==2?(modificarGrupo(e, nombre)):(modificarAlma(e, ubi, capacidad ))}}>Confirmar</button>
                         <button onClick={(e)=>{modificar(e)}}>Cancelar</button>
                     </div>
                 </div>
             ):(<></>)}
 
             {/* Esto es lo que tendra la ventana de vinculacion */}
-            {estadoV['estadoV']==1?(
+            {estadoV==2?(
                 <div class="popupvin">
                     <h2>VINCULACIÓN</h2>
                     <br/>
@@ -378,7 +378,7 @@ function Menu(props) {
                     </div>
                     <br/>
                     <div>
-                        <button onClick={(e)=>{vincular(e, usuario['usuario'], password['password'])}}>vincular</button>
+                        <button onClick={(e)=>{vincular(e, usuario, password)}}>vincular</button>
                         <button onClick={(e)=>{vinculacion(e)}}>Cancelar</button>
                     </div>
                 </div>

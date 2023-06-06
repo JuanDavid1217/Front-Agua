@@ -19,12 +19,12 @@ function IsesioN(){
     const[status, setStatus]=useState(0);
 
     const ChangeUser=(e)=>{
-        setUser({user: e.target.value});
+        setUser(e.target.value);
         
     }
 
     const ChangePassword=(e)=> {
-        setPassword({password: e.target.value});
+        setPassword(e.target.value);
         
     }
 
@@ -37,15 +37,13 @@ function IsesioN(){
         }
         ).then(res=>{
             if (res.status==200){
-                setTipo({tipo: res.data.id_tipo});
-                setStatus({status: 1});
+                setTipo(res.data['id_tipo']);
+                setStatus(1);
                 const info=res.data;
-                if(status['status']==1){
-                    if(tipo['tipo']==1){
-                        navigate('/Admin', {state:info});
-                    }else{
-                        navigate('/Casa', {state:info})
-                    }
+                if(info['id_tipo']==1){
+                    navigate('/Admin', {state:info});
+                }else{
+                    navigate('/Casa', {state:info})
                 }
             }
         }).catch(errors=>{
@@ -62,11 +60,9 @@ function IsesioN(){
         }
         ).then(res=>{
             if (res.status==200){
-                setStatus({status: 2})
+                setStatus(2)
                 const info=res.data;
-                if(status['status']==2){
                     navigate('/Empleado', {state:info});
-                }
             }
         }).catch(errors=>{
             window.alert(errors.response.data['detail'])
@@ -95,8 +91,8 @@ function IsesioN(){
                     <input type="password" id="contrasena-signin" onChange={(e)=>{ChangePassword(e)}}/>
                 </form>
                 <div className="botones-bienvenida">
-                <button onClick={(e)=>{iniSesion(e, user['user'], password['password'])}}>Iniciar Sesión</button>
-                <button onClick={(e)=>{iniVin(e, user['user'], password['password'])}}>Vinculación</button>
+                <button onClick={(e)=>{iniSesion(e, user, password)}}>Iniciar Sesión</button>
+                <button onClick={(e)=>{iniVin(e, user, password)}}>Vinculación</button>
                 </div>
                 {/*<Routes>
                     <Route path={"/perfil"} element={<Administrador/>}/>
