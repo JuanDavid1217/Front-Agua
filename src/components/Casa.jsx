@@ -7,6 +7,7 @@ import './Casa.css'
 import Almacenamiento from "./Almacenamiento";
 import { useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
+import Menu from '../menu/menubar.js'
 
 //const apiurl = "http://127.0.0.1:8000/"
 const apiurl = "https://fastapi-juandavid1217.cloud.okteto.net/"
@@ -74,6 +75,7 @@ function Casa () {
             <Portada
                 urlPortada ='https://images.unsplash.com/photo-1491557345352-5929e343eb89?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
             />
+            <Menu vista={1} tipo={2}></Menu>
              <div className="contenidoCasa">
                 <div className="gpoCasa">
                     <h1>{casa['grupos'][0]['nombre']}</h1>
@@ -86,7 +88,7 @@ function Casa () {
                     <div className="gpoTinacos">
                         {casa['grupos'][0]['almacenamientos'].map((alm, index)=>(
                             
-                            <div key={index}><Componente nombre={alm['ubicacion']} group_id={alm['id_almacenamiento']} navegar={opcion}/></div>
+                            <div key={index}><Componente nombre={alm['ubicacion']} group_id={alm['id_almacenamiento']} navegar={opcion} user={2}/></div>
                             
                         ))}
                         {/*<button className="nuevoTinaco">
