@@ -50,6 +50,11 @@ function Almacenamiento() {
                             <label htmlFor="estadoApagado">Apagado</label>
                         </form>
                     </div>
+                    {user!=1?(
+                            <div>
+                                <button>On/Off</button>
+                            </div>   
+                        ):(<></>)}
                 </div>
                 <div className="tablaConsumo">
                     <table>
