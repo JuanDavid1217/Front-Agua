@@ -1,15 +1,107 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Portada from "./Portada";
 import './Almacenamiento.css'
 import Menu from '../menu/menubar.js'
 import { useLocation } from "react-router-dom";
+import mqtt from 'mqtt'
+import axios from "axios";
+const apiurl = "https://fastapi-juandavid1217.cloud.okteto.net/"
 
 function Almacenamiento() {
     const data=useLocation()
     const dataAlma=data.state['info']
     const user=data.state['user']
+    const topico=data.state['topico']
+    var [mensaje, setMensaje]=useState("")
+    var [porcentaje, setPorcentaje]=useState(0)
+    var [boyas, setBoyas] = useState("")
+    var [bomba, setBomba]=useState("")
+    //var [bomba, setBomba]=useState(false)
+    
+    const options = {
+        clean: true, // retain session
+    connectTimeout: 4000, // Timeout period
+    // Authentication information
+    clientId: topico+user,
+    username: 'emqx_test',
+    password: 'emqx_test',
+    }
+    
+    const connectUrl = 'http://localhost:8083/mqtt'
+    var client=null;
     console.log("Estoy en el almacenaiento del user_id: "+user)
     console.log("Estoy en el almacenaiento del grupo: "+dataAlma['id_grupo'])
+    
+    useEffect(() => {
+        if (client==null) {
+          // Si no está conectado, se establece la conexión MQTT
+          conectarMQTT();
+        }
+    
+        // Función de retorno para desconectar MQTT cuando el componente se desmonta
+        return () => {
+          desconectarMQTT();
+          
+        };
+      }, []);
+
+    const conectarMQTT=()=>{
+        client=mqtt.connect(connectUrl, options)
+        client.on('connect', function () {
+            client.subscribe(topico+"/#", function (err) {
+              if (err) {
+                //client.publish('presence', 'Hello mqtt')
+                console.log(err)
+                //console.log(topico)
+              }
+            })
+          })
+          
+        client.on('message', function (topic, message) {
+            // message is Buffer
+            var data=message.toString()
+            data=JSON.parse(data)
+            if (topic==topico+"/boyas"){
+                setBoyas(data)
+                setPorcentaje((data.nivel/dataAlma['capacidad_maxima'])*100)
+            }else{
+                if (topic==topico+"/bomba"){
+                    setBomba(data)
+                }
+            }
+            //console.log(data)
+            //setMensaje(data)
+            //setPorcentaje((data.nivel/dataAlma['capacidad_maxima'])*100)
+            //client.end()
+        })
+    }
+
+    const desconectarMQTT=()=>{
+        if(client!=null){
+            client.end()
+            console.log("cliente desconectado")
+            client=null;
+        }
+    }
+    const onoffBomba=(e)=>{
+        e.preventDefault()
+        var onoff=" ";
+        if(client==null){
+            client = mqtt.connect(connectUrl, options)
+
+            client.on('reconnect', (error) => {
+            })
+
+            
+        }
+        if(bomba.bomba==false){
+            onoff="prender"
+        }else{
+            onoff="apagar"
+        }
+        client.publish(topico+"/action", `{"opcion":"${onoff}"}`)
+    }
+
     return (
         <div className="mainAlmacenamiento">
             <Portada
@@ -34,27 +126,50 @@ function Almacenamiento() {
                         <p>Capacidad máxima</p>
                         <p>{dataAlma['capacidad_maxima']} Lts</p>
                         <div>Nivel actual</div>
-                        <div>2/3</div>
+                        <div>{porcentaje} %</div>
+                        {user!=1?(
+                            <div>
+                                <button onClick={(e)=>{onoffBomba(e)}}>On/Off</button>
+                            </div>   
+                        ):(<></>)}
                     </div>
-                    <div className="nivelGrafico">
+                    <div class="barra">
+                        <div class="relleno" id="rellenoBarra" style={{"width":`${porcentaje}%`}}></div>
+                    </div>
+
+                    {/*<div className="nivelGrafico">
                         <div className="nivel" id="nivel1"></div>
                         <div className="nivel" id="nivel2"></div>
                         <div className="nivel" id="nivel3"></div>
-                    </div>
+                    </div>*/}
                     <div className="estado">
-                        <p>Estado</p>
-                        <form action="">
-                            <input type="radio" id="estadoEncendido" />
-                            <label htmlFor="estadoEncendido">Encendido</label>
-                            <input type="radio" id="estadoApagado" />
-                            <label htmlFor="estadoApagado">Apagado</label>
-                        </form>
+                        <div class="acomodo">
+                        <p class="texto">Estado Bomba:</p>
+                        <div class="foquitoBomba" id="foquito1" style={{"backgroundColor":`${bomba.bomba==true?("green"):("red")}`}}></div>
+                        <div class="texto">{mensaje.bomba==true?("Encendida"):("Apagada")}</div>
+                        </div>
+                        <div class="acomodo">
+                        <p class="texto">Boya 1:</p>
+                        <div class="foquito1" id="foquito1" style={{"backgroundColor":`${boyas.boya1==true?("green"):("red")}`}}></div>
+                        <div class="texto">{boyas.boya1==true?("Activa"):("Desactivada")}</div>
+                        </div>
+                        <div class="acomodo">
+                        <p class="texto">Boya 2:</p>
+                        <div class="foquito2" id="foquito1" style={{"backgroundColor":`${boyas.boya2==true?("green"):("red")}`}}></div>
+                        <div class="texto">{boyas.boya2==true?("Activa"):("Desactivada")}</div>
+                        </div>
+                        <div class="acomodo">
+                        <p class="texto">Boya 3:</p>
+                        <div class="foquito3" id="foquito1" style={{"backgroundColor":`${boyas.boya3==true?("green"):("red")}`}}></div>
+                        <div class="texto">{boyas.boya3==true?("Activa"):("Desactivada")}</div>
+                        </div >
+                        <div class="acomodo">
+                        <p class="texto">Boya Principal:</p>
+                        <div class="foquitoPrincipal" id="foquito1" style={{"backgroundColor":`${boyas.BP==true?("green"):("red")}`}}></div>
+                        <div class="texto">{boyas.BP==true?("Activa"):("Desactivada")}</div>
+                        </div>
                     </div>
-                    {user!=1?(
-                            <div>
-                                <button>On/Off</button>
-                            </div>   
-                        ):(<></>)}
+                    
                 </div>
                 <div className="tablaConsumo">
                     <table>

@@ -8,6 +8,7 @@ import Almacenamiento from "./Almacenamiento";
 import { useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import Menu from '../menu/menubar.js'
+import { validarNombres, validarCantidad } from "./validations";
 
 //const apiurl = "http://127.0.0.1:8000/"
 const apiurl = "https://fastapi-juandavid1217.cloud.okteto.net/"
@@ -31,10 +32,18 @@ function Casa () {
 
     const createAlma=(e, capacidad, ubicacion, id_grupo, grupos)=>{
         e.preventDefault();
-        addAlma(e, capacidad, ubicacion, id_grupo, grupos);
+        var pase1=validarNombres(ubicacion)
+        var pase2=validarCantidad(capacidad)
+        if(pase1['nombre']!=null && pase2['cantidad']!=null){
+            addAlma(e, capacidad, ubicacion, id_grupo, grupos);
+        }else{
+            window.alert(pase1['mensaje']+" "+pase2['mensaje'])
+        }
     }
     const addAlma=(e, capacidad, ubicacion, id_grupo, grupos)=>{
         e.preventDefault();
+        var IoT;
+        var almacenamiento;
         axios(
             {
                 method: 'POST',
@@ -46,6 +55,39 @@ function Casa () {
                 }
             }
         ).then(res=>{
+            if(res.status==200){
+                almacenamiento=res.data;
+                console.log(almacenamiento)
+                axios(
+                    {
+                        method: 'GET',
+                        url: apiurl+"Administrador-Casa/Grupo/"+id_grupo
+                    }
+                ).then(res=>{
+                    if(res.status==200){
+                        IoT=res.data;
+                        console.log(IoT)
+                        axios(
+                            {
+                                method: 'POST',
+                                url: apiurl+"Administrador-Casa/Almacenamiento/IoT/",
+                                data:{
+                                    dispo_IoT: `${IoT['usuario']}/${IoT['grupo']}/${ubicacion}`,
+                                    id_almacenamiento: almacenamiento['id_almacenamiento']
+                                }
+                            }
+                        ).then(res=>{
+                            if(res.status==200){
+                                console.log(res.data)
+                            }
+                        }).catch(errors=>{
+                            window.alert(errors.response.data['detail'])
+                        })
+                    }
+                }).catch(errors=>{
+                    window.alert(errors.response.data['detail'])
+                })
+            }
             console.log("Respuesta de guardado (Almacenamiento): "+res.status)
             getAlmas(e, id_grupo, grupos)
         }).catch(errors=>{

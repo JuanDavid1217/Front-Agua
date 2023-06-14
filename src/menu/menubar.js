@@ -2,6 +2,7 @@ import './style.css';
 import React, { useState } from "react";
 import {useNavigate} from "react-router-dom"
 import axios from "axios";
+import { validarUserRegister, validarPasswordRegister } from '../components/validations';
 
 const apiurl = "https://fastapi-juandavid1217.cloud.okteto.net/";
 
@@ -258,22 +259,28 @@ function Menu(props) {
     }
     const vincular=(e, u, p)=>{
         e.preventDefault()
-        axios(
-            {
-                method:'POST',
-                url: apiurl+"Administrador/",
-                data:{
-                    usuario_vinculacion: u,
-                    id_grupo: id,
-                    clave_vinculacion: p
+        var pase1=validarUserRegister(u)
+        var pase2=validarPasswordRegister(p)
+        if(pase1['usuario']!=null&&pase2['password']!=null){
+            axios(
+                {
+                    method:'POST',
+                    url: apiurl+"Administrador/",
+                    data:{
+                        usuario_vinculacion: u,
+                        id_grupo: id,
+                        clave_vinculacion: p
+                    }
                 }
-            }
-        ).then(res=>{
-            vinculacion(e)
-            window.alert("usuario vinculado con exito!!")
-        }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
-        })
+            ).then(res=>{
+                vinculacion(e)
+                window.alert("usuario vinculado con exito!!")
+            }).catch(errors=>{
+                window.alert(errors.response.data['detail'])
+            })
+        }else{
+            window.alert(pase1['mensaje']+" "+pase2['mensaje'])
+        }
     }
     //const {vista}=props
     {/*tipo

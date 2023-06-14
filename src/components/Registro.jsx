@@ -4,6 +4,7 @@ import '../components/Isesion.css';
 import Administrador from '../components/Administrador.jsx';
 import '../App.css';
 import { useNavigate } from "react-router-dom";
+import {validarUserRegister, validarPasswordRegister} from "./validations";
 
 
 //const apiurl = "http://127.0.0.1:8000/"
@@ -47,53 +48,59 @@ function Registro(){
     }
 
     const Registro=(event, user, upassword, utipo)=>{
-        axios(
-        {
-            method: 'POST',
-            url: apiurl+"General-Users/",
-            data:{
-                usuario:user,
-                password:upassword,
-                id_tipo: utipo
+        var pase=validarUserRegister(user)
+        var pase2=validarPasswordRegister(password)
+        if((pase['usuario']!=null)&&(pase2['password']!=null)){
+            axios(
+            {
+                method: 'POST',
+                url: apiurl+"General-Users/",
+                data:{
+                    usuario:user,
+                    password:upassword,
+                    id_tipo: utipo
+                }
             }
-        }
-        ).then(res=>{
-            if (res.status==200){
-                setStatus(1)
-                const info=res.data;
-                    if(utipo==1){
-                        navigate('/Admin', {state: info});
-                    }else{
-                        axios({
-                            method:'POST',
-                            url: apiurl+"Administrador-Casa/Grupo/",
-                            data:{
-                                nombre:"Mi Hogar",
-                                id_usuario:info['id_usuario']
-                            }
-                        }).then(res2=>{
-                            if(res2.status==200){
-                                //navigate('/Casa', {state: res2.data})
-                                axios(
-                                    {
-                                        method: 'GET',
-                                        url: apiurl+"General-Users/"+user+"/"+upassword,
-                                    }
-                                ).then(res=>{
-                                    navigate('/Casa', {state: res.data})
-                                }).catch(errors=>{
-                                    window.alert(errors.response.data['detail'])
-                                })
-                            }
-                        }).catch(errors=>{
-                            window.alert(errors.response.data['detail'])
-                        })
-                    }
+            ).then(res=>{
+                if (res.status==200){
+                    setStatus(1)
+                    const info=res.data;
+                        if(utipo==1){
+                            navigate('/Admin', {state: info});
+                        }else{
+                            axios({
+                                method:'POST',
+                                url: apiurl+"Administrador-Casa/Grupo/",
+                                data:{
+                                    nombre:"Mi Hogar",
+                                    id_usuario:info['id_usuario']
+                                }
+                            }).then(res2=>{
+                                if(res2.status==200){
+                                    //navigate('/Casa', {state: res2.data})
+                                    axios(
+                                        {
+                                            method: 'GET',
+                                            url: apiurl+"General-Users/"+user+"/"+upassword,
+                                        }
+                                    ).then(res=>{
+                                        navigate('/Casa', {state: res.data})
+                                    }).catch(errors=>{
+                                        window.alert(errors.response.data['detail'])
+                                    })
+                                }
+                            }).catch(errors=>{
+                                window.alert(errors.response.data['detail'])
+                            })
+                        }
                 
-            }
-        }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
-        })
+                }
+            }).catch(errors=>{
+                window.alert(errors.response.data['detail'])
+            })
+        }else{
+            window.alert(pase['mensaje']+" "+pase2['mensaje'])
+        }
     }
 
     return (
