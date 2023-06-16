@@ -5,6 +5,7 @@ import Componente from './Componente.jsx'
 import { useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import Menu from '../menu/menubar.js'
+import { validarNombres } from "./validations";
 
 //const apiurl = "http://127.0.0.1:8000/"
 const apiurl = "https://fastapi-juandavid1217.cloud.okteto.net/"//"https://fastapi-juandavid1217.cloud.okteto.net/"
@@ -24,7 +25,12 @@ function Administrador() {
 
     const createGroup=(e, user, nombreg, admin)=>{
         e.preventDefault();
-        addGroup(e, user, nombreg, admin);
+        var pase1=validarNombres(nombreg)
+        if(pase1['nombre']!=null){
+            addGroup(e, user, nombreg, admin);
+        }else{
+            window.alert(pase1['mensaje'])
+        }
     }
     const addGroup=(e, user, nombreg, admin)=>{
         e.preventDefault();
