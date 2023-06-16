@@ -1,0 +1,43 @@
+.contenedor {
+    border: 3px solid #6BA7B5;
+    background-color: #fffffff1;
+    padding: 20px;
+    text-align: center;
+    color:black;
+    width: 1000px; 
+    height: 400px;
+    margin:10px;
+  }
+
+.contenedor > text {
+    margin-right: 40px;
+    font-size: 15px;
+}
+  
+  .graficas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .graficas > div {
+    margin:20px;
+  }
+
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .principal{
+    display:flex;
+    justify-content: center;
+    /*align-items: center;*/
+    height: 100vh; /* Ajusta la altura del contenedor principal */
+    margin: 0;
+  }
+
+  span{
+    font-weight: bold;
+  }
