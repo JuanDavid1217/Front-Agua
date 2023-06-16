@@ -1,7 +1,7 @@
 function validarUserRegister(usuario){
     var longitud=usuario.length;
     var mensaje="";
-    if(longitud==0||longitud>8){
+    if(longitud==0||longitud>20){
         usuario= null
         mensaje="Campo Usuario vacio o demasiado largo. "
     }else{
@@ -69,7 +69,7 @@ function validarPasswordIniSesion(password){
 function validarNombres(nombre){
     var longitud=nombre.length;
     var mensaje="";
-    if (longitud==0||longitud>8){
+    if (longitud==0||longitud>20){
         nombre=null;
         mensaje="Campo vacio o demasiado largo."
     }

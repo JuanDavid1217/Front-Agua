@@ -5,6 +5,7 @@ import Menu from '../menu/menubar.js'
 import { useLocation } from "react-router-dom";
 import mqtt from 'mqtt'
 import axios from "axios";
+import Bars from "../graficas/BarsChart";
 const apiurl = "https://fastapi-juandavid1217.cloud.okteto.net/"
 
 function Almacenamiento() {
@@ -16,6 +17,13 @@ function Almacenamiento() {
     var [porcentaje, setPorcentaje]=useState(0)
     var [boyas, setBoyas] = useState("")
     var [bomba, setBomba]=useState("")
+    var [entradas, setEntradas]=useState("")
+    var [salidas, setSalidas]=useState("")
+    var [totalE, setTotalE]=useState(0)
+    var[totalS, setTotalS]=useState(0)
+    var dataAnalisis="";
+    var fechaini="";
+    var fechafin="";
     //var [bomba, setBomba]=useState(false)
     
     const options = {
@@ -102,6 +110,50 @@ function Almacenamiento() {
         client.publish(topico+"/action", `{"opcion":"${onoff}"}`)
     }
 
+    const changeFechaini=(e)=>{
+        e.preventDefault()
+        fechaini=e.target.value.toString()
+        console.log(fechaini)
+    }
+    const changeFechafin=(e)=>{
+        e.preventDefault()
+        fechafin=e.target.value.toString()
+        console.log(fechafin)
+    }
+    const analizar=(e)=>{
+        e.preventDefault()
+        if(fechaini!=""&&fechafin!=""){
+            var diaini=parseInt(fechaini.substring(8,10))
+            var diafin=parseInt(fechafin.substring(8,10))
+
+            if(diafin-diaini<=6){
+                axios(
+                    {
+                        method: 'GET',
+                        url: apiurl+"IoT/analisis/"+dataAlma['id_almacenamiento']+"/"+fechaini+"/"+fechafin
+                    }
+                ).then(res=>{
+                    if (res.status==200){
+                        dataAnalisis=res.data
+                        separar(e, dataAnalisis)
+                    }
+                }).catch(errors=>{
+                    window.alert(errors.response.data['detail'])
+                })
+            }else{
+                window.alert("El rango máximo de días permitidos es 7")
+            }
+        }else{
+            window.alert("Tienes campos fecha vacios.")
+        }
+    }
+    const separar=(e, info)=>{
+        e.preventDefault()
+        setEntradas(info['entradas'])
+        setSalidas(info['salidas'])
+        setTotalE(info['TotalE'])
+        setTotalS(info['TotalS'])
+    }
     return (
         <div className="mainAlmacenamiento">
             <Portada
@@ -114,11 +166,12 @@ function Almacenamiento() {
                     <h2>Historial de Consumo</h2>
                     <form action="">
                         <label htmlFor="fechaInicio">Fecha de Inicio</label>
-                        <input type="date" id="fechaInicio" />
+                        <input type="date" id="fechaInicio" onChange={(e)=>{changeFechaini(e)}}/>
                         <label htmlFor="fechaFin">Ficha de Fin</label>
-                        <input type="date" id="fechaFin" />
+                        <input type="date" id="fechaFin" onChange={(e)=>{changeFechafin(e)}}/>
                     </form>
-                    <button>Calcular</button>
+                    <button onClick={(e)=>{analizar(e)}}>Calcular</button>
+                    {/*console.log(dataAnalisis)*/}
                 </div>
                 <div className="estadoActual">
                     <h2>Estado Actual</h2>
@@ -126,7 +179,7 @@ function Almacenamiento() {
                         <p>Capacidad máxima</p>
                         <p>{dataAlma['capacidad_maxima']} Lts</p>
                         <div>Nivel actual</div>
-                        <div>{porcentaje} %</div>
+                        <div>{porcentaje.toFixed(2)} %</div>
                         {user!=1?(
                             <div>
                                 <button onClick={(e)=>{onoffBomba(e)}}>On/Off</button>
@@ -171,7 +224,8 @@ function Almacenamiento() {
                     </div>
                     
                 </div>
-                <div className="tablaConsumo">
+                
+                {/*<div className="tablaConsumo">
                     <table>
                         <tr className="num1">
                             <td>Fecha</td>
@@ -189,7 +243,10 @@ function Almacenamiento() {
                             <td>2/3</td>
                         </tr>
                     </table>
-                </div>
+                </div>*/}
+            </div>
+            <div>
+                    <Bars entradasBar={entradas} salidasBar={salidas} totalEBar={totalE} totalSBar={totalS}></Bars>
             </div>
         </div>
     );

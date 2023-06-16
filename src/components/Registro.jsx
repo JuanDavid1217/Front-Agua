@@ -27,7 +27,7 @@ function Registro(){
     const [user, setUser]=useState('');
     const [password, setPassword]=useState('');
     const [confirmp, setConfirmp]=useState('');
-    const [tipo, setTipo]=useState(0);
+    const [tipo, setTipo]=useState(1);
     const [status, setStatus]=useState(0);
 
     const handleChange=(event)=> {
