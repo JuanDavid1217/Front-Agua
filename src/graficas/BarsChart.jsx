@@ -41,19 +41,16 @@ function Bars(props){
     var repeat=1;
     for (var i=0; i<FHE.length; i++){
         console.log(i)
-        if(i==0){
+        if(i===0){
             FHED.push(FHE[0])
             ED.push(E[0])
         }else{
-            if(FHE[i]!=FHE[i-1]){
+            if(FHE[i]!==FHE[i-1]){
                 FHED.push(FHE[i])
                 ED.push(E[i])
-                console.log("Son distintos")
             }else{
                 ED[i-repeat]+=E[i]
                 repeat=repeat+1;
-                console.log("repeat:"+repeat)
-                console.log("Son iguales")
             }
         }
     }
@@ -61,21 +58,18 @@ function Bars(props){
     var SD=[]
     var FHSD=[]
     var repeat2=1;
-    for (var i=0; i<FHE.length; i++){
+    for (var i=0; i<FHS.length; i++){//Se cambio FHE por FHS
         console.log(i)
-        if(i==0){
+        if(i===0){
             FHSD.push(FHS[0])
             SD.push(S[0])
         }else{
-            if(FHS[i]!=FHS[i-1]){
+            if(FHS[i]!==FHS[i-1]){
                 FHSD.push(FHS[i])
                 SD.push(S[i])
-                console.log("Son distintos")
             }else{
                 SD[i-repeat2]+=S[i]
                 repeat2=repeat2+1;
-                console.log("repeat:"+repeat2)
-                console.log("Son iguales")
             }
         }
     }

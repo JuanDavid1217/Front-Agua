@@ -7,12 +7,10 @@ import axios from "axios";
 import Menu from '../menu/menubar.js'
 import { validarNombres } from "./validations";
 
-//const apiurl = "http://127.0.0.1:8000/"
-const apiurl = "https://fastapi-juandavid1217.cloud.okteto.net/"//"https://fastapi-juandavid1217.cloud.okteto.net/"
+const apiurl = "https://fastapi-juandavid1217.cloud.okteto.net/"
 
 function Administrador() {
     const location = useLocation();
-    console.log(location.state);
     const navegar=useNavigate();
     const admin=location.state;
     const opcion=1;
@@ -26,7 +24,7 @@ function Administrador() {
     const createGroup=(e, user, nombreg, admin)=>{
         e.preventDefault();
         var pase1=validarNombres(nombreg)
-        if(pase1['nombre']!=null){
+        if(pase1['nombre']!==null){
             addGroup(e, user, nombreg, admin);
         }else{
             window.alert(pase1['mensaje'])
@@ -44,10 +42,13 @@ function Administrador() {
                 }
             }
         ).then(res=>{
-            console.log("Respuesta de guardado (Grupo): "+res.status)
             getGroups(e, user, admin)
         }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
+            if(errors.message!=='Network Error'){
+                window.alert(errors.response.data['detail'])
+            }else{
+                console.log("server shutdown")
+            } 
         })
     }
 
@@ -59,14 +60,19 @@ function Administrador() {
                 url: apiurl+"Administrador/Grupos/"+user
             }
         ).then(res=>{
-            console.log(res.data)
             admin['grupos']=res.data;
             navegar('/Admin', {state:admin, replace:true});
         }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
+            if(errors.message!=='Network Error'){
+                window.alert(errors.response.data['detail'])
+            }else{
+                console.log("server shutdown")
+            } 
         })
+
+    
     }
-    //console.log(info)
+    
     return (
         <div className="mainAdministrador">
             <Portada
@@ -88,28 +94,10 @@ function Administrador() {
                             <div key={index}><Componente nombre={alm['nombre']} group_id={alm['id_grupo']} navegar={opcion} user={admin['id_usuario']}/></div>
                             
                         ))}
-                        {/*<button className="nuevaSucursal">
-                            <box-icon name='folder-plus' color='#456c75' ></box-icon>
-                            <p>Crear</p>
-                        </button>
-                        <Componente
-                            nombre = "Sucursal Córdoba"
-                        />
-                        <Componente
-                            nombre = "Sucursal Orizaba"
-                        />
-                        <Componente
-                            nombre = "Sucursal Veracruz"
-                        />
-                        <Componente
-                            nombre = "Sucursal Nogales"
-                        />
-                        <Componente
-                            nombre = "Sucursal Fortin"
-                        />*/}
+                        
                     </div>
                 </div>
-                {admin['id_tipo']==1?(<div className="altaGrupo">
+                {admin['id_tipo']===1?(<div className="altaGrupo">
                     <h2>Alta de Grupo</h2>
                     <form action="">
                         <label htmlFor="nombreAlta">Nombre</label>
