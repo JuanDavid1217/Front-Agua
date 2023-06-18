@@ -24,10 +24,8 @@ function Menu(props) {
         e.preventDefault();
         if (estado=== 1) {
             setEstado(2 )
-            console.log(estado)
         } else {
             setEstado(1)
-            console.log(estado)
         }
     }
 
@@ -58,55 +56,71 @@ function Menu(props) {
 /*---ELIMINACION DE ALMACENAMIENTOS Y/O GRUPOS----*/
     /*---RESTABLECIMIENTO DE DATOS----*/
     const almacenamientosAdmin=(e)=>{
-        console.log(grupo)
+        
         axios(
             {
                 method: 'GET',
                 url: apiurl+"Administrador/Grupo/"+grupo,
             }
         ).then(res=>{
-            if(res.status==200){
+            if(res.status===200){
                 navegar('/Admin/Grupos', {state:res.data, replace:true})
             }
         }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
+            if(errors.message!=='Network Error'){
+                window.alert(errors.response.data['detail'])
+            }else{
+                console.log("server shutdown")
+            } 
         })
     }
+
     const almacenamientosCasa=(e, u)=>{
         e.preventDefault()
+        
         axios(
             {
                 method: 'GET',
                 url: apiurl+"General-Users/"+u
             }
         ).then(res=>{
-            if(res.status==200){
+            if(res.status===200){
                 navegar('/Casa', {state:res.data, replace:true})
             }
         }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
+            if(errors.message!=='Network Error'){
+                window.alert(errors.response.data['detail'])
+            }else{
+                console.log("server shutdown")
+            } 
         })
     }
+
     //posteriormente se obtiene la info del usuario
     const grupos=(e, id_user)=>{
         e.preventDefault()
+        
         axios(
             {
                 method: 'GET',
                 url: apiurl+"General-Users/"+id_user
             }
         ).then(res=>{
-            if(res.status==200){
+            if(res.status===200){
                 navegar("/Admin", {state:res.data, replace:true})
             }
         }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
+            if(errors.message!=='Network Error'){
+                window.alert(errors.response.data['detail'])
+            }else{
+                console.log("server shutdown")
+            } 
         })
     }
 
     const eliminar=(e)=>{
         e.preventDefault()
-        if(estadoE==1){
+        if(estadoE===1){
             setEstadoE(2)
         }else{
             setEstadoE(1)
@@ -115,6 +129,7 @@ function Menu(props) {
 
     const eliminarAlma=(e)=>{
         e.preventDefault();
+        
         axios(
             {
                 method: 'GET',
@@ -128,36 +143,42 @@ function Menu(props) {
                     url: apiurl+"Administrador-Casa/Almacenamiento/"+id
                 }
             ).then(res=>{
-                if(res.status==200){
+                if(res.status===200){
                     eliminar(e)
-                    if(tipo==1){
+                    if(tipo===1){
                         almacenamientosAdmin(e)
                     }else{
                         almacenamientosCasa(e, u['id_usuario'])
                     }
                 }
             }).catch(errors=>{
-                window.alert(errors.response.data['detail'])
+                if(errors.message!=='Network Error'){
+                    window.alert(errors.response.data['detail'])
+                }else{
+                    console.log("server shutdown")
+                } 
             })
         }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
+            if(errors.message!=='Network Error'){
+                window.alert(errors.response.data['detail'])
+            }else{
+                console.log("server shutdown")
+            } 
         })
     }
 
 
     const eliminarGrupo=(e)=>{
         e.preventDefault();
+        
         axios(
             {
                 method: 'GET',
                 url: apiurl+"Administrador/Grupo/"+id
             }
         ).then(res=>{
-            //console.log(res.data['id_usuario'])
-            //id_user= res.data['id_usuario']
-            //console.log(id_user)
             const info=res.data['id_usuario']
-            if(info!=null||info!=undefined){
+            if(info!==null||info!==undefined){
                 axios(
                     {
                         method: 'DELETE',
@@ -168,12 +189,20 @@ function Menu(props) {
                     window.alert("Grupo eliminado con exito!")
                     grupos(e, info)
                 }).catch(errors=>{
-                    window.alert(errors.response.data['detail'])
+                    if(errors.message!=='Network Error'){
+                        window.alert(errors.response.data['detail'])
+                    }else{
+                        console.log("server shutdown")
+                    } 
                 })
             }
 
         }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
+            if(errors.message!=='Network Error'){
+                window.alert(errors.response.data['detail'])
+            }else{
+                console.log("server shutdown")
+            } 
         })
     }
 
@@ -181,7 +210,7 @@ function Menu(props) {
 
     const modificar=(e)=>{
         e.preventDefault()
-        if(estadoM==1){
+        if(estadoM===1){
             setEstadoM(2)
         }else{
             setEstadoM(1)
@@ -190,6 +219,7 @@ function Menu(props) {
 
     const modificarAlma=(e, ubi, capacidad)=>{
         e.preventDefault();
+        
         axios(
             {
                 method: 'GET',
@@ -208,9 +238,9 @@ function Menu(props) {
                     }
                 }
             ).then(res=>{
-                if(res.status==200){
+                if(res.status===200){
                     modificar(e)
-                    if(tipo==1){
+                    if(tipo===1){
                         almacenamientosAdmin(e)
                     }else{
                         almacenamientosCasa(e, u['id_usuario'])
@@ -218,16 +248,25 @@ function Menu(props) {
                 }
                 window.alert("Almacenamiento modificado con exito!!")
             }).catch(errors=>{
-                window.alert(errors.response.data['detail'])
+                if(errors.message!=='Network Error'){
+                    window.alert(errors.response.data['detail'])
+                }else{
+                    console.log("server shutdown")
+                } 
             })
         }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
+            if(errors.message!=='Network Error'){
+                window.alert(errors.response.data['detail'])
+            }else{
+                console.log("server shutdown")
+            } 
         })
     }
 
     const modificarGrupo=(e, nombre)=>{
         console.log(objeto['id_usuario'])
         e.preventDefault();
+        
         axios(
             {
                 method: 'PUT',
@@ -241,7 +280,11 @@ function Menu(props) {
             window.alert("Grupo modificado con exito!")
             grupos(e, objeto['id_usuario'])
         }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
+            if(errors.message!=='Network Error'){
+                window.alert(errors.response.data['detail'])
+            }else{
+                console.log("server shutdown")
+            } 
         })
     }
 
@@ -251,7 +294,7 @@ function Menu(props) {
 
     const vinculacion=(e)=>{
         e.preventDefault()
-        if(estadoV==1){
+        if(estadoV===1){
             setEstadoV(2)
         }else{
             setEstadoV(1)
@@ -261,7 +304,8 @@ function Menu(props) {
         e.preventDefault()
         var pase1=validarUserRegister(u)
         var pase2=validarPasswordRegister(p)
-        if(pase1['usuario']!=null&&pase2['password']!=null){
+        if(pase1['usuario']!==null&&pase2['password']!==null){
+            
             axios(
                 {
                     method:'POST',
@@ -276,21 +320,26 @@ function Menu(props) {
                 vinculacion(e)
                 window.alert("usuario vinculado con exito!!")
             }).catch(errors=>{
-                window.alert(errors.response.data['detail'])
+                if(errors.message!=='Network Error'){
+                    window.alert(errors.response.data['detail'])
+                }else{
+                    console.log("server shutdown")
+                } 
             })
         }else{
             window.alert(pase1['mensaje']+" "+pase2['mensaje'])
         }
     }
+    
     //const {vista}=props
-    {/*tipo
+    /*tipo
      1: Empleado (Vinculacion)
      2: Administrador
-     3: Casa*/}
-    {/*vista
+     3: Casa*/
+    /*vista
      1: solo cerrar sesion
      2: cerrar sesion, eliminar, modificar o vncular (a nivel de grupo)
-     3: cerrar sesion, eliminar, modificar (a nivel de almacenamiento)*/}
+     3: cerrar sesion, eliminar, modificar (a nivel de almacenamiento)*/
 
     return (
         <>
@@ -302,10 +351,10 @@ function Menu(props) {
                     <div class="bar"></div>
                 </div>
                 {
-                    estado==2?(
+                    estado===2?(
                     <ul class="menu" id="menu" >
-                        {nivel==2&&tipo==1?(<li><a onClick={(e)=>{vinculacion(e)}}>Vincular</a></li>):(<></>)}
-                        {(nivel==2||nivel==3)&&(tipo==2||tipo==1)?(
+                        {nivel===2&&tipo===1?(<li><a onClick={(e)=>{vinculacion(e)}}>Vincular</a></li>):(<></>)}
+                        {(nivel===2||nivel===3)&&(tipo===2||tipo===1)?(
                             <>
                             <li><a onClick={(e)=>{modificar(e)}}>Modificar</a></li>
                             <li><a onClick={(e)=>{eliminar(e)}}>Eliminar</a></li>
@@ -317,28 +366,28 @@ function Menu(props) {
             </div>
 
             {/* Lo que contendra la ventana de eliminacion*/}
-            {estadoE==2?(
+            {estadoE===2?(
                 <div class="popup">
                     <h2>ELIMINACION</h2>
                     <br/>
-                    <p>Estas seguro de querer eliminar el {nivel==2?("Grupo"):("Almacenamiento")} actual?, Los datos eliminados
+                    <p>Estas seguro de querer eliminar el {nivel===2?("Grupo"):("Almacenamiento")} actual?, Los datos eliminados
                     no podran recuperarse.</p>
                     <br/>
                     <div>
-                        <button onClick={(e)=>{nivel==2?(eliminarGrupo(e)):(eliminarAlma(e))}}>Confirmar</button>
+                        <button onClick={(e)=>{nivel===2?(eliminarGrupo(e)):(eliminarAlma(e))}}>Confirmar</button>
                         <button onClick={(e)=>{eliminar(e)}}>Cancelar</button>
                     </div>
                 </div>
             ):(<></>)}
 
             {/* Lo que contendra la ventana de modificacio*/}
-            {estadoM==2?(
+            {estadoM===2?(
                 <div class="popup">
                     <h2>ACTUALIZACIÓN</h2>
                     <br/>
-                    <p>¿Estas seguro de querer modificar el {nivel==2?("Grupo"):("Almacenamiento")} actual?</p>
+                    <p>¿Estas seguro de querer modificar el {nivel===2?("Grupo"):("Almacenamiento")} actual?</p>
                     <br/>
-                    {nivel==2?(
+                    {nivel===2?(
                         <div>
                         <label htmlFor="capacidadMax">Nombre:  </label>
                         <input type="text" id="ubi" onChange={(e)=>{changeNombre(e)}}/>
@@ -358,14 +407,14 @@ function Menu(props) {
                     )}
                     <br/>
                     <div>
-                        <button onClick={(e)=>{nivel==2?(modificarGrupo(e, nombre)):(modificarAlma(e, ubi, capacidad ))}}>Confirmar</button>
+                        <button onClick={(e)=>{nivel===2?(modificarGrupo(e, nombre)):(modificarAlma(e, ubi, capacidad ))}}>Confirmar</button>
                         <button onClick={(e)=>{modificar(e)}}>Cancelar</button>
                     </div>
                 </div>
             ):(<></>)}
 
             {/* Esto es lo que tendra la ventana de vinculacion */}
-            {estadoV==2?(
+            {estadoV===2?(
                 <div class="popupvin">
                     <h2>VINCULACIÓN</h2>
                     <br/>
