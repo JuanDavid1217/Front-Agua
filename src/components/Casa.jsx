@@ -3,19 +3,16 @@ import React, {useState} from "react";
 import Componente from "./Componente";
 import Portada from "./Portada";
 import './Casa.css'
-//import { useLocation} from "react-router-dom";
-import Almacenamiento from "./Almacenamiento";
 import { useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import Menu from '../menu/menubar.js'
 import { validarNombres, validarCantidad } from "./validations";
 
-//const apiurl = "http://127.0.0.1:8000/"
+
 const apiurl = "https://fastapi-juandavid1217.cloud.okteto.net/"
 
 function Casa () {
     const location = useLocation();
-    console.log(location.state);
     const navegar=useNavigate();
     const casa=location.state;
     const opcion=2;
@@ -34,7 +31,7 @@ function Casa () {
         e.preventDefault();
         var pase1=validarNombres(ubicacion)
         var pase2=validarCantidad(capacidad)
-        if(pase1['nombre']!=null && pase2['cantidad']!=null){
+        if(pase1['nombre']!==null && pase2['cantidad']!==null){
             addAlma(e, capacidad, ubicacion, id_grupo, grupos);
         }else{
             window.alert(pase1['mensaje']+" "+pase2['mensaje'])
@@ -55,18 +52,16 @@ function Casa () {
                 }
             }
         ).then(res=>{
-            if(res.status==200){
+            if(res.status===200){
                 almacenamiento=res.data;
-                console.log(almacenamiento)
                 axios(
                     {
                         method: 'GET',
                         url: apiurl+"Administrador-Casa/Grupo/"+id_grupo
                     }
                 ).then(res=>{
-                    if(res.status==200){
+                    if(res.status===200){
                         IoT=res.data;
-                        console.log(IoT)
                         axios(
                             {
                                 method: 'POST',
@@ -77,21 +72,33 @@ function Casa () {
                                 }
                             }
                         ).then(res=>{
-                            if(res.status==200){
+                            if(res.status===200){
                                 console.log(res.data)
                             }
                         }).catch(errors=>{
-                            window.alert(errors.response.data['detail'])
+                            if(errors.message!=='Network Error'){
+                                window.alert(errors.response.data['detail'])
+                            }else{
+                                console.log("server shutdown")
+                            } 
                         })
                     }
                 }).catch(errors=>{
-                    window.alert(errors.response.data['detail'])
+                    if(errors.message!=='Network Error'){
+                        window.alert(errors.response.data['detail'])
+                    }else{
+                        console.log("server shutdown")
+                    } 
                 })
             }
             console.log("Respuesta de guardado (Almacenamiento): "+res.status)
             getAlmas(e, id_grupo, grupos)
         }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
+            if(errors.message!=='Network Error'){
+                window.alert(errors.response.data['detail'])
+            }else{
+                console.log("server shutdown")
+            } 
         })
     }
 
@@ -103,15 +110,19 @@ function Casa () {
                 url: apiurl+"Administrador-Casa/Almacenamientos/"+id_grupo
             }
         ).then(res=>{
-            if(res.status==200){
+            if(res.status===200){
                 grupos['grupos'][0]['almacenamientos']=res.data;
                 navegar('/Casa', {state:grupos, replace:true})
             }
         }).catch(errors=>{
-            window.alert(errors.response.data['detail'])
+            if(errors.message!=='Network Error'){
+                window.alert(errors.response.data['detail'])
+            }else{
+                console.log("server shutdown")
+            } 
         })
     }
-//{casa['nombre']==null?(casa['grupos'][0]['nombre']):(casa['nombre'])}
+
     return (
         <div className="mainCasa">
             <Portada
@@ -133,32 +144,12 @@ function Casa () {
                             <div key={index}><Componente nombre={alm['ubicacion']} group_id={alm['id_almacenamiento']} navegar={opcion} user={2}/></div>
                             
                         ))}
-                        {/*<button className="nuevoTinaco">
-                            <box-icon name='folder-plus' color='#456c75' ></box-icon>
-                            <p>Crear</p>
-                        </button>
-                        <Componente
-                            nombre = "Baño 1"
-                        />
-                        <Componente
-                            nombre = "Baño 2"
-                        />
-                        <Componente
-                            nombre = "Cocina"
-                        />
-                        <Componente
-                            nombre = "Jardín"
-                        />
-                        <Componente
-                            nombre = "Alberca"
-                        />*/}
+                        
                     </div>
                 </div>
                 <div className="altaAlmacenamiento">
                     <h2>Alta de Almacenamiento</h2>
                     <form action="">
-                        {/*<label htmlFor="nombreAlmacenamiento">Nombre</label>
-                        <input type="text" id="nombreAlmacenamiento" />*/}
                         <label htmlFor="capacidadMax">Capacidad Máxima</label>
                         <input type="number" id="capacidadax" onChange={(e)=>{ChangeCapacidad(e)}}/>
                         <label htmlFor="ubicacionAlmacenamiento">Ubicación</label>
